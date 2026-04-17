@@ -17,7 +17,9 @@ module.exports = {
   },
   port: process.env.PORT || 5000,
   database: {
-    connection: process.env.DB_CONNECTION,
-    name: process.env.DB_NAME,
+    url:
+      process.env.DB_CONNECTION ||
+      'mongodb+srv://KuisBackEndPro1:password123456@cluster0.e1q7wf1.mongodb.net/demo-db',
+    name: process.env.DB_NAME || 'demo-db',
   },
 };

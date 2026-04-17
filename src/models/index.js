@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -5,11 +6,14 @@ const mongoose = require('mongoose');
 const config = require('../core/config');
 const logger = require('../core/logger')('app');
 
-// Join the database connection string
-const connectionString = new URL(config.database.connection);
-connectionString.pathname += config.database.name;
+const dbUri = config.database.url || 'mongodb://...';
+const mongoUrl = new URL(dbUri);
 
-mongoose.connect(`${connectionString.toString()}`);
+console.log(`Menghubungkan ke host: ${mongoUrl.host}`);
+
+mongoose.connect(config.database.url, {
+  dbName: config.database.name,
+});
 
 const db = mongoose.connection;
 db.once('open', () => {
